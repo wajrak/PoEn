@@ -31,6 +31,7 @@ namespace PoEn
 
         public MyCustomApplicationContext()
         {
+            form.Icon = Resources.AppIcon;
             // Initialize Tray Icon
             trayIcon = new NotifyIcon()
             {

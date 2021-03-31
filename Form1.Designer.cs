@@ -263,7 +263,7 @@ namespace PoEn
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(626, 140);
+            this.button3.Location = new System.Drawing.Point(626, 139);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(54, 32);
@@ -359,9 +359,9 @@ namespace PoEn
             "15",
             "20",
             "25"});
-            this.comboBox2.Location = new System.Drawing.Point(585, 145);
+            this.comboBox2.Location = new System.Drawing.Point(570, 145);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(35, 24);
+            this.comboBox2.Size = new System.Drawing.Size(50, 24);
             this.comboBox2.TabIndex = 16;
             this.comboBox2.Text = "5";
             // 

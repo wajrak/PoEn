@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -410,8 +411,36 @@ namespace PoEn
         private void button3_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(CountSpecifficBlocks("Trade Requests").ToString());
+            Console.WriteLine(SendNotificationFromFirebaseCloud());
         }
 
+        public static String SendNotificationFromFirebaseCloud()
+        {
+            var result = "-1";
+            var webAddr = "https://fcm.googleapis.com/fcm/send";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=AAAAYpNOLUM:APA91bE73CrV_tc2siR867_-I4teXGLsD0tv9pZAx1SCjbILTRd_UKiBSauvCLoeDitIXWVQQXXp69MWaJR2iZPVzFVrMe9BBvG3B-RB8qjNmMaDTRzezNctn_5lfd-chmaeM0UgN2oR");
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string strNJson = @"{""to"": ""/topics/PoE"", ""data"": {
+                        ""Action"": ""Some short desc"",
+                        ""Header"": ""any number"",
+                        ""Item"": ""detail desc""
+                },
+                    ""notification"": {""title"": ""PoE: Incident No. number"", ""text"": ""This is Notification"", ""sound"":""default""}}";
+                streamWriter.Write(strNJson);
+                streamWriter.Flush();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
 
         //TOPMST window for debuging while in the game
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
