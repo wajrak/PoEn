@@ -25,13 +25,14 @@ namespace PoEn
         const string logFile = "\\log.txt";
         const string clientFile = "logs\\Client.txt";
         bool ThreadActive = false;
-        int initialNumberofRecordsDisplayed = 0;
         int currentTradeRecordsInFile = 0;
+        string deviceToken = String.Empty;
 
         public Form1()
         {
             InitializeComponent();
             InitialSetup();
+            LoadSettings();
             this.Icon = Resources.AppIcon;
         }
 
@@ -189,7 +190,8 @@ namespace PoEn
                                 currency = priceSubs[2];
 
                                 //getting last 4 records of priceSubs to get item possition
-
+                                possitionY = priceSubs[priceSubs.Length-1];
+                                possitionX = priceSubs[priceSubs.Length-3];
 
 
                                 int rowId = dataGridView1.Rows.Add();
@@ -204,6 +206,8 @@ namespace PoEn
                                 row.Cells["Item"].Value = itemR;
                                 row.Cells["Price"].Value = price;
                                 row.Cells["Currency"].Value = currency;
+                                row.Cells["PossitionTop"].Value = possitionY.Replace(")","");
+                                row.Cells["PossitionLeft"].Value = possitionX.Replace(",","");
 
                                 Console.WriteLine("Subs count: " + subs.Length.ToString());
                             }
@@ -520,5 +524,40 @@ namespace PoEn
             System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
             snd.Play();
         }
+
+        //save some settings and dispose of icon on form closing event
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default["ClientsPath"] = txtInstallationPath.Text;
+            Properties.Settings.Default["DeviceToken"] = txtDeviceToken.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void LoadSettings()
+        {
+            txtInstallationPath.Text = Properties.Settings.Default["ClientsPath"].ToString();
+            txtDeviceToken.Text = Properties.Settings.Default["DeviceToken"].ToString();
+        }
+
+        //draw a grid to show estimated item location
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            int cellSize = 10;
+            int numOfCells = 48;
+            Pen blackPen = new Pen(Color.Black, 3);
+            
+            for (int y = 0; y < numOfCells; ++y)
+            {
+                e.Graphics.DrawLine(blackPen, 0, y * cellSize, numOfCells * cellSize, y * cellSize);
+            }
+
+            for (int x = 0; x < numOfCells; ++x)
+            {
+                e.Graphics.DrawLine(blackPen, x * cellSize, 0, x * cellSize, numOfCells * cellSize);
+            }
+        }
+
+        //do datagrid sortin upon refres
+        //show stash location on selected item
     }
 }

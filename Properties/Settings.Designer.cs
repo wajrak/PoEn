@@ -22,5 +22,29 @@ namespace PoEn.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientsPath {
+            get {
+                return ((string)(this["ClientsPath"]));
+            }
+            set {
+                this["ClientsPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DeviceToken {
+            get {
+                return ((string)(this["DeviceToken"]));
+            }
+            set {
+                this["DeviceToken"] = value;
+            }
+        }
     }
 }
