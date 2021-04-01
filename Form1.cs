@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using PoEn.Properties;
 
 namespace PoEn
 {
@@ -30,6 +32,7 @@ namespace PoEn
         {
             InitializeComponent();
             InitialSetup();
+            this.Icon = Resources.AppIcon;
         }
 
         private string CheckRegistryKey()
@@ -74,6 +77,15 @@ namespace PoEn
             //Set-up client watcher
             fileSystemWatcher1.Path = txtInstallationPath.Text + "logs";
 
+            //check default option on the checkbox list
+            int index = chkOptionsList.Items.IndexOf("Trade Requests");
+            chkOptionsList.SetItemChecked(index, true);
+
+            //disable stop thread button at start but only if background worker isnt running.
+            if (ThreadActive == false)
+            {
+                btnStopThread.Enabled = false;
+            }
         }
 
         //Show and log error messages
@@ -130,7 +142,7 @@ namespace PoEn
             Application.DoEvents();
 
             //Loop through all checked items on the list and populate data grid
-            foreach (string item in checkedListBox1.CheckedItems)
+            foreach (string item in chkOptionsList.CheckedItems)
             {
                 Console.WriteLine("Processing: " + item.ToString());
                 //opening file in read only mode, otherwise POE holds it locked nad we are unable to read
@@ -153,6 +165,8 @@ namespace PoEn
                                 string currency = String.Empty;
                                 string itemR = String.Empty;
                                 string leagueType = String.Empty;
+                                string possitionY = String.Empty;
+                                string possitionX = String.Empty;
 
                                 //do some processing and split string into subs
                                 Console.WriteLine($"Processing Sub");
@@ -173,6 +187,9 @@ namespace PoEn
                                 itemR = secondSubsItemSplit[1].Replace("listed", "");
                                 price = priceSubs[1];
                                 currency = priceSubs[2];
+
+                                //getting last 4 records of priceSubs to get item possition
+
 
 
                                 int rowId = dataGridView1.Rows.Add();
@@ -268,6 +285,7 @@ namespace PoEn
             ThreadActive = true;
             newThread.Start();
             btnStartThread.Enabled = false;
+            btnStopThread.Enabled = true;
         }
 
         //static method to use line skiping without need to use filestream
@@ -411,11 +429,24 @@ namespace PoEn
         private void button3_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(CountSpecifficBlocks("Trade Requests").ToString());
-            Console.WriteLine(SendNotificationFromFirebaseCloud());
+            Console.WriteLine(SendNotificationFromFirebaseCloud(DateTime.Now,"action","header","item","price","posY","posX"));
         }
 
-        public static String SendNotificationFromFirebaseCloud()
+        public class Message
         {
+            public DateTime Timestamp { get; set; }
+            public string Action { get; set; }
+            public string Header { get; set; }
+            public string Item { get; set; }
+            public string Price { get; set; }
+            public string PosY { get; set; }
+            public string PosX { get; set; }
+        }
+
+        //needs to be changed to a speciffic target
+        public static String SendNotificationFromFirebaseCloud(DateTime timestamp, string action, string header, string item, string price, string posY, string posX)
+        {
+
             var result = "-1";
             var webAddr = "https://fcm.googleapis.com/fcm/send";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
@@ -424,13 +455,24 @@ namespace PoEn
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                string strNJson = @"{""to"": ""/topics/PoE"", ""data"": {
-                        ""Action"": ""Some short desc"",
-                        ""Header"": ""any number"",
-                        ""Item"": ""detail desc""
-                },
-                    ""notification"": {""title"": ""PoE: Incident No. number"", ""text"": ""This is Notification"", ""sound"":""default""}}";
-                streamWriter.Write(strNJson);
+                Message msg = new Message();
+                msg.Timestamp = timestamp;
+                msg.Action = action;
+                msg.Header = header;
+                msg.Item = item;
+                msg.Price = price;
+                msg.PosY = posY;
+                msg.PosX = posX;
+
+                string output = @"{""to"": ""/topics/PoE"", ""data"": " + Environment.NewLine;
+                output += JsonConvert.SerializeObject(msg);
+                output += @", " + Environment.NewLine + @"""notification"": {""title"": ""PoEn Message"", ""body"": ""This is Notification"", ""sound"":""default""}}";
+
+                Console.WriteLine(output);
+                Console.WriteLine(" ============");
+
+                streamWriter.Write(output);
+                Console.WriteLine(output);
                 streamWriter.Flush();
             }
 

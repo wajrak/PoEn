@@ -33,15 +33,8 @@ namespace PoEn
             this.txtInstallationPath = new System.Windows.Forms.TextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Currency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Additional = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnStartThread = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.chkOptionsList = new System.Windows.Forms.CheckedListBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
@@ -56,14 +49,26 @@ namespace PoEn
             this.reportABugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.button4 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbGameMode = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbDisplayLimiter = new System.Windows.Forms.ComboBox();
             this.cmbAlarm = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.chkFlashWindow = new System.Windows.Forms.CheckBox();
+            this.projectWebsiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbTabSize = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PossitionTop = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PossitionLeft = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Currency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Additional = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -110,6 +115,8 @@ namespace PoEn
             this.Type,
             this.Price,
             this.Item,
+            this.PossitionTop,
+            this.PossitionLeft,
             this.Currency,
             this.Additional});
             this.dataGridView1.Location = new System.Drawing.Point(15, 177);
@@ -119,55 +126,6 @@ namespace PoEn
             this.dataGridView1.Size = new System.Drawing.Size(842, 285);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 6;
-            this.ID.Name = "ID";
-            this.ID.Width = 30;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "Date";
-            this.Date.MinimumWidth = 6;
-            this.Date.Name = "Date";
-            this.Date.Width = 125;
-            // 
-            // Type
-            // 
-            this.Type.HeaderText = "Type";
-            this.Type.MinimumWidth = 6;
-            this.Type.Name = "Type";
-            this.Type.Width = 125;
-            // 
-            // Price
-            // 
-            this.Price.HeaderText = "Price";
-            this.Price.MinimumWidth = 6;
-            this.Price.Name = "Price";
-            this.Price.Width = 125;
-            // 
-            // Item
-            // 
-            this.Item.HeaderText = "Item";
-            this.Item.MinimumWidth = 6;
-            this.Item.Name = "Item";
-            this.Item.Width = 125;
-            // 
-            // Currency
-            // 
-            this.Currency.HeaderText = "Currency";
-            this.Currency.MinimumWidth = 6;
-            this.Currency.Name = "Currency";
-            this.Currency.Width = 125;
-            // 
-            // Additional
-            // 
-            this.Additional.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Additional.HeaderText = "Additional";
-            this.Additional.MinimumWidth = 6;
-            this.Additional.Name = "Additional";
             // 
             // btnStartThread
             // 
@@ -180,12 +138,12 @@ namespace PoEn
             this.btnStartThread.UseVisualStyleBackColor = true;
             this.btnStartThread.Click += new System.EventHandler(this.button1_Click);
             // 
-            // checkedListBox1
+            // chkOptionsList
             // 
-            this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
+            this.chkOptionsList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkOptionsList.CheckOnClick = true;
+            this.chkOptionsList.FormattingEnabled = true;
+            this.chkOptionsList.Items.AddRange(new object[] {
             "Trade Requests",
             "Incoming Messages",
             "Outgoing Messages",
@@ -194,10 +152,10 @@ namespace PoEn
             "Device Messages",
             "Location Messages",
             "Connection Messages"});
-            this.checkedListBox1.Location = new System.Drawing.Point(686, 29);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(171, 106);
-            this.checkedListBox1.TabIndex = 6;
+            this.chkOptionsList.Location = new System.Drawing.Point(686, 29);
+            this.chkOptionsList.Name = "chkOptionsList";
+            this.chkOptionsList.Size = new System.Drawing.Size(171, 106);
+            this.chkOptionsList.TabIndex = 6;
             // 
             // statusStrip1
             // 
@@ -263,7 +221,7 @@ namespace PoEn
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(626, 139);
+            this.button3.Location = new System.Drawing.Point(626, 140);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(54, 32);
@@ -304,7 +262,8 @@ namespace PoEn
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reportABugToolStripMenuItem,
-            this.aboutToolStripMenuItem1});
+            this.aboutToolStripMenuItem1,
+            this.projectWebsiteToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
@@ -312,34 +271,35 @@ namespace PoEn
             // reportABugToolStripMenuItem
             // 
             this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
-            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.reportABugToolStripMenuItem.Text = "Report bug";
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(167, 26);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem1.Text = "Donate";
             // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(404, 42);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(64, 23);
+            this.button4.Size = new System.Drawing.Size(73, 23);
             this.button4.TabIndex = 13;
             this.button4.Text = "Browse";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cmbGameMode
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cmbGameMode.FormattingEnabled = true;
+            this.cmbGameMode.Items.AddRange(new object[] {
             "Ritual",
             "Standard"});
-            this.comboBox1.Location = new System.Drawing.Point(130, 69);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 14;
-            this.comboBox1.Text = "Ritual";
+            this.cmbGameMode.Location = new System.Drawing.Point(130, 69);
+            this.cmbGameMode.Name = "cmbGameMode";
+            this.cmbGameMode.Size = new System.Drawing.Size(121, 24);
+            this.cmbGameMode.TabIndex = 14;
+            this.cmbGameMode.Text = "Ritual";
             // 
             // label1
             // 
@@ -350,20 +310,20 @@ namespace PoEn
             this.label1.TabIndex = 15;
             this.label1.Text = "Game Mode:";
             // 
-            // comboBox2
+            // cmbDisplayLimiter
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.cmbDisplayLimiter.FormattingEnabled = true;
+            this.cmbDisplayLimiter.Items.AddRange(new object[] {
             "5",
             "10",
             "15",
             "20",
             "25"});
-            this.comboBox2.Location = new System.Drawing.Point(570, 145);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(50, 24);
-            this.comboBox2.TabIndex = 16;
-            this.comboBox2.Text = "5";
+            this.cmbDisplayLimiter.Location = new System.Drawing.Point(570, 145);
+            this.cmbDisplayLimiter.Name = "cmbDisplayLimiter";
+            this.cmbDisplayLimiter.Size = new System.Drawing.Size(50, 24);
+            this.cmbDisplayLimiter.TabIndex = 16;
+            this.cmbDisplayLimiter.Text = "5";
             // 
             // cmbAlarm
             // 
@@ -420,19 +380,111 @@ namespace PoEn
             this.chkFlashWindow.Text = "Flash Window";
             this.chkFlashWindow.UseVisualStyleBackColor = true;
             // 
+            // projectWebsiteToolStripMenuItem
+            // 
+            this.projectWebsiteToolStripMenuItem.Name = "projectWebsiteToolStripMenuItem";
+            this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.projectWebsiteToolStripMenuItem.Text = "Project Website";
+            // 
+            // cmbTabSize
+            // 
+            this.cmbTabSize.FormattingEnabled = true;
+            this.cmbTabSize.Items.AddRange(new object[] {
+            "Normal",
+            "Quad"});
+            this.cmbTabSize.Location = new System.Drawing.Point(331, 69);
+            this.cmbTabSize.Name = "cmbTabSize";
+            this.cmbTabSize.Size = new System.Drawing.Size(146, 24);
+            this.cmbTabSize.TabIndex = 22;
+            this.cmbTabSize.Text = "Normal";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(257, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 17);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Tab Size:";
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 6;
+            this.ID.Name = "ID";
+            this.ID.Width = 30;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Date";
+            this.Date.MinimumWidth = 6;
+            this.Date.Name = "Date";
+            this.Date.Width = 125;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Type";
+            this.Type.MinimumWidth = 6;
+            this.Type.Name = "Type";
+            this.Type.Width = 125;
+            // 
+            // Price
+            // 
+            this.Price.HeaderText = "Price";
+            this.Price.MinimumWidth = 6;
+            this.Price.Name = "Price";
+            this.Price.Width = 50;
+            // 
+            // Item
+            // 
+            this.Item.HeaderText = "Item";
+            this.Item.MinimumWidth = 6;
+            this.Item.Name = "Item";
+            this.Item.Width = 200;
+            // 
+            // PossitionTop
+            // 
+            this.PossitionTop.HeaderText = "P. Top";
+            this.PossitionTop.MinimumWidth = 6;
+            this.PossitionTop.Name = "PossitionTop";
+            this.PossitionTop.Width = 40;
+            // 
+            // PossitionLeft
+            // 
+            this.PossitionLeft.HeaderText = "P. Left";
+            this.PossitionLeft.MinimumWidth = 6;
+            this.PossitionLeft.Name = "PossitionLeft";
+            this.PossitionLeft.Width = 40;
+            // 
+            // Currency
+            // 
+            this.Currency.HeaderText = "Currency";
+            this.Currency.MinimumWidth = 6;
+            this.Currency.Name = "Currency";
+            this.Currency.Width = 125;
+            // 
+            // Additional
+            // 
+            this.Additional.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Additional.HeaderText = "Additional";
+            this.Additional.MinimumWidth = 6;
+            this.Additional.Name = "Additional";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 491);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmbTabSize);
             this.Controls.Add(this.chkFlashWindow);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbAlarm);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cmbDisplayLimiter);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbGameMode);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.chkIgnoreHistoricalData);
@@ -440,7 +492,7 @@ namespace PoEn
             this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.chkOptionsList);
             this.Controls.Add(this.btnStartThread);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnTest);
@@ -468,7 +520,7 @@ namespace PoEn
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnStartThread;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox chkOptionsList;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button button1;
@@ -480,24 +532,29 @@ namespace PoEn
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportABugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Item;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Currency;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Additional;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbGameMode;
         private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbDisplayLimiter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbAlarm;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkFlashWindow;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripMenuItem projectWebsiteToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbTabSize;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PossitionTop;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PossitionLeft;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Currency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Additional;
     }
 }
 

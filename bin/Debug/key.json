@@ -1,0 +1,5 @@
+<ItemGroup>
+  <None Update="key.json">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
