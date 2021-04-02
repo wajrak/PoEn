@@ -34,6 +34,7 @@ namespace PoEn
             InitializeComponent();
             InitialSetup();
             LoadSettings();
+            chkDoubleBuffered.Checked = true;
             this.Icon = Resources.AppIcon;
         }
 

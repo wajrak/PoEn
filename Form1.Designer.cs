@@ -74,6 +74,8 @@ namespace PoEn
             this.lblLimitDisplay = new System.Windows.Forms.Label();
             this.chkStashLocation = new System.Windows.Forms.CheckBox();
             this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -83,7 +85,7 @@ namespace PoEn
             // lblInstallationPath
             // 
             this.lblInstallationPath.AutoSize = true;
-            this.lblInstallationPath.Location = new System.Drawing.Point(12, 43);
+            this.lblInstallationPath.Location = new System.Drawing.Point(12, 34);
             this.lblInstallationPath.Name = "lblInstallationPath";
             this.lblInstallationPath.Size = new System.Drawing.Size(112, 17);
             this.lblInstallationPath.TabIndex = 1;
@@ -91,7 +93,7 @@ namespace PoEn
             // 
             // txtInstallationPath
             // 
-            this.txtInstallationPath.Location = new System.Drawing.Point(130, 42);
+            this.txtInstallationPath.Location = new System.Drawing.Point(130, 32);
             this.txtInstallationPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtInstallationPath.Name = "txtInstallationPath";
             this.txtInstallationPath.Size = new System.Drawing.Size(268, 22);
@@ -100,7 +102,7 @@ namespace PoEn
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(686, 221);
+            this.btnTest.Location = new System.Drawing.Point(686, 236);
             this.btnTest.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(171, 40);
@@ -126,7 +128,7 @@ namespace PoEn
             this.PossitionLeft,
             this.Currency,
             this.Additional});
-            this.dgvMain.Location = new System.Drawing.Point(15, 266);
+            this.dgvMain.Location = new System.Drawing.Point(15, 281);
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.RowHeadersWidth = 51;
             this.dgvMain.RowTemplate.Height = 24;
@@ -201,7 +203,7 @@ namespace PoEn
             // btnStartThread
             // 
             this.btnStartThread.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStartThread.Location = new System.Drawing.Point(15, 229);
+            this.btnStartThread.Location = new System.Drawing.Point(15, 244);
             this.btnStartThread.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStartThread.Name = "btnStartThread";
             this.btnStartThread.Size = new System.Drawing.Size(111, 32);
@@ -225,9 +227,9 @@ namespace PoEn
             "Location Messages",
             "Connection Messages",
             "Slain Counter"});
-            this.chkOptionsList.Location = new System.Drawing.Point(686, 42);
+            this.chkOptionsList.Location = new System.Drawing.Point(686, 31);
             this.chkOptionsList.Name = "chkOptionsList";
-            this.chkOptionsList.Size = new System.Drawing.Size(171, 174);
+            this.chkOptionsList.Size = new System.Drawing.Size(171, 191);
             this.chkOptionsList.TabIndex = 6;
             // 
             // statusStrip1
@@ -235,7 +237,7 @@ namespace PoEn
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 554);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 569);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(869, 26);
             this.statusStrip1.TabIndex = 7;
@@ -259,7 +261,7 @@ namespace PoEn
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(626, 229);
+            this.button1.Location = new System.Drawing.Point(626, 244);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(54, 32);
@@ -271,7 +273,7 @@ namespace PoEn
             // btnStopThread
             // 
             this.btnStopThread.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStopThread.Location = new System.Drawing.Point(132, 229);
+            this.btnStopThread.Location = new System.Drawing.Point(132, 244);
             this.btnStopThread.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStopThread.Name = "btnStopThread";
             this.btnStopThread.Size = new System.Drawing.Size(111, 32);
@@ -282,7 +284,7 @@ namespace PoEn
             // 
             // chkIgnoreHistoricalData
             // 
-            this.chkIgnoreHistoricalData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkIgnoreHistoricalData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkIgnoreHistoricalData.AutoSize = true;
             this.chkIgnoreHistoricalData.Checked = true;
             this.chkIgnoreHistoricalData.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -296,7 +298,7 @@ namespace PoEn
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(566, 229);
+            this.button3.Location = new System.Drawing.Point(566, 244);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(54, 32);
@@ -322,7 +324,7 @@ namespace PoEn
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysOnTopToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // alwaysOnTopToolStripMenuItem
@@ -340,7 +342,7 @@ namespace PoEn
             this.aboutToolStripMenuItem1,
             this.projectWebsiteToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // reportABugToolStripMenuItem
@@ -363,7 +365,7 @@ namespace PoEn
             // 
             // btnSelectFile
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(404, 41);
+            this.btnSelectFile.Location = new System.Drawing.Point(404, 31);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(73, 23);
             this.btnSelectFile.TabIndex = 13;
@@ -377,7 +379,7 @@ namespace PoEn
             this.cmbGameMode.Items.AddRange(new object[] {
             "Ritual",
             "Standard"});
-            this.cmbGameMode.Location = new System.Drawing.Point(130, 128);
+            this.cmbGameMode.Location = new System.Drawing.Point(130, 146);
             this.cmbGameMode.Name = "cmbGameMode";
             this.cmbGameMode.Size = new System.Drawing.Size(121, 24);
             this.cmbGameMode.TabIndex = 14;
@@ -386,7 +388,7 @@ namespace PoEn
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 131);
+            this.label1.Location = new System.Drawing.Point(12, 151);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 17);
             this.label1.TabIndex = 15;
@@ -394,7 +396,6 @@ namespace PoEn
             // 
             // cmbDisplayLimiter
             // 
-            this.cmbDisplayLimiter.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbDisplayLimiter.FormattingEnabled = true;
             this.cmbDisplayLimiter.Items.AddRange(new object[] {
             "5",
@@ -402,7 +403,7 @@ namespace PoEn
             "15",
             "20",
             "25"});
-            this.cmbDisplayLimiter.Location = new System.Drawing.Point(130, 189);
+            this.cmbDisplayLimiter.Location = new System.Drawing.Point(130, 206);
             this.cmbDisplayLimiter.Name = "cmbDisplayLimiter";
             this.cmbDisplayLimiter.Size = new System.Drawing.Size(50, 24);
             this.cmbDisplayLimiter.TabIndex = 16;
@@ -417,7 +418,7 @@ namespace PoEn
             "Beep-03",
             "Beep-04",
             "Beep-05"});
-            this.cmbAlarm.Location = new System.Drawing.Point(130, 158);
+            this.cmbAlarm.Location = new System.Drawing.Point(130, 176);
             this.cmbAlarm.Name = "cmbAlarm";
             this.cmbAlarm.Size = new System.Drawing.Size(121, 24);
             this.cmbAlarm.TabIndex = 17;
@@ -426,7 +427,7 @@ namespace PoEn
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 161);
+            this.label2.Location = new System.Drawing.Point(12, 181);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 17);
             this.label2.TabIndex = 18;
@@ -435,7 +436,7 @@ namespace PoEn
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(89, 161);
+            this.linkLabel1.Location = new System.Drawing.Point(257, 179);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(35, 17);
             this.linkLabel1.TabIndex = 19;
@@ -445,6 +446,7 @@ namespace PoEn
             // 
             // checkBox1
             // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -457,6 +459,7 @@ namespace PoEn
             // 
             // chkFlashWindow
             // 
+            this.chkFlashWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkFlashWindow.AutoSize = true;
             this.chkFlashWindow.Location = new System.Drawing.Point(503, 42);
             this.chkFlashWindow.Name = "chkFlashWindow";
@@ -471,7 +474,7 @@ namespace PoEn
             this.cmbTabSize.Items.AddRange(new object[] {
             "Normal",
             "Quad"});
-            this.cmbTabSize.Location = new System.Drawing.Point(130, 98);
+            this.cmbTabSize.Location = new System.Drawing.Point(130, 116);
             this.cmbTabSize.Name = "cmbTabSize";
             this.cmbTabSize.Size = new System.Drawing.Size(121, 24);
             this.cmbTabSize.TabIndex = 22;
@@ -480,7 +483,7 @@ namespace PoEn
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 101);
+            this.label3.Location = new System.Drawing.Point(12, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 17);
             this.label3.TabIndex = 23;
@@ -489,7 +492,7 @@ namespace PoEn
             // lblDeviceToken
             // 
             this.lblDeviceToken.AutoSize = true;
-            this.lblDeviceToken.Location = new System.Drawing.Point(12, 70);
+            this.lblDeviceToken.Location = new System.Drawing.Point(12, 63);
             this.lblDeviceToken.Name = "lblDeviceToken";
             this.lblDeviceToken.Size = new System.Drawing.Size(99, 17);
             this.lblDeviceToken.TabIndex = 24;
@@ -497,7 +500,7 @@ namespace PoEn
             // 
             // txtDeviceToken
             // 
-            this.txtDeviceToken.Location = new System.Drawing.Point(130, 70);
+            this.txtDeviceToken.Location = new System.Drawing.Point(130, 60);
             this.txtDeviceToken.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDeviceToken.Name = "txtDeviceToken";
             this.txtDeviceToken.Size = new System.Drawing.Size(268, 22);
@@ -505,9 +508,8 @@ namespace PoEn
             // 
             // lblLimitDisplay
             // 
-            this.lblLimitDisplay.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLimitDisplay.AutoSize = true;
-            this.lblLimitDisplay.Location = new System.Drawing.Point(12, 192);
+            this.lblLimitDisplay.Location = new System.Drawing.Point(12, 211);
             this.lblLimitDisplay.Name = "lblLimitDisplay";
             this.lblLimitDisplay.Size = new System.Drawing.Size(90, 17);
             this.lblLimitDisplay.TabIndex = 26;
@@ -515,7 +517,7 @@ namespace PoEn
             // 
             // chkStashLocation
             // 
-            this.chkStashLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkStashLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkStashLocation.AutoSize = true;
             this.chkStashLocation.Location = new System.Drawing.Point(503, 123);
             this.chkStashLocation.Name = "chkStashLocation";
@@ -526,20 +528,40 @@ namespace PoEn
             // 
             // chkDoubleBuffered
             // 
+            this.chkDoubleBuffered.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkDoubleBuffered.AutoSize = true;
             this.chkDoubleBuffered.Location = new System.Drawing.Point(503, 150);
             this.chkDoubleBuffered.Name = "chkDoubleBuffered";
-            this.chkDoubleBuffered.Size = new System.Drawing.Size(98, 21);
+            this.chkDoubleBuffered.Size = new System.Drawing.Size(163, 21);
             this.chkDoubleBuffered.TabIndex = 28;
-            this.chkDoubleBuffered.Text = "checkBox2";
+            this.chkDoubleBuffered.Text = "Doule buffer for DGV";
             this.chkDoubleBuffered.UseVisualStyleBackColor = true;
             this.chkDoubleBuffered.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 91);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 17);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "Account Name:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(130, 88);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(268, 22);
+            this.textBox1.TabIndex = 30;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(869, 580);
+            this.ClientSize = new System.Drawing.Size(869, 595);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.chkDoubleBuffered);
             this.Controls.Add(this.chkStashLocation);
             this.Controls.Add(this.lblLimitDisplay);
@@ -631,6 +653,8 @@ namespace PoEn
         private System.Windows.Forms.Label lblLimitDisplay;
         private System.Windows.Forms.CheckBox chkStashLocation;
         private System.Windows.Forms.CheckBox chkDoubleBuffered;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label4;
     }
 }
 

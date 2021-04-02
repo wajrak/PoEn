@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,5 +130,97 @@ namespace PoEn
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
                 null, ctl, new object[] { DoubleBuffered });
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                //var json = wc.DownloadString("http://www.pathofexile.com/api/public-stash-tabs");
+                var json = wc.DownloadString("https://www.pathofexile.com/character-window/get-stash-items?league=Ritual&tabs=1,17&tabIndex=1,17&accountName=wajrak");
+                wc.UseDefaultCredentials = true;
+                RootObject obj = JsonConvert.DeserializeObject<RootObject>(json);
+
+            }
+        }
+
+        public class Items
+        {
+            [JsonProperty("sizeW")]
+            public int SizeW { get; set; }
+
+            [JsonProperty("sizeH")]
+            public int SizeH { get; set; }
+
+            [JsonProperty("icon")]
+            public string Icon { get; set; }
+
+            [JsonProperty("league")]
+            public string league { get; set; }
+
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("typeLine")]
+            public string TypeLine { get; set; }
+
+            [JsonProperty("baseType")]
+            public string BaseType { get; set; }
+
+            [JsonProperty("identified")]
+            public string Identified { get; set; }
+
+            [JsonProperty("itemLevel")]
+            public int ItemLevel { get; set; }
+
+            [JsonProperty("properties")]
+            public string[] Properties { get; set; }
+
+            [JsonProperty("explicitMods")]
+            public string[] ExplicitMods { get; set; }
+
+            [JsonProperty("descrText")]
+            public int DescrText { get; set; }
+
+            [JsonProperty("frameType")]
+            public int FrameType{ get; set; }
+
+            [JsonProperty("x")]
+            public int x { get; set; }
+
+            [JsonProperty("y")]
+            public int y { get; set; }
+
+            [JsonProperty("inventoryId")]
+            public string InventoryId { get; set; }
+
+        }
+        public class Tabs
+        {
+            public string N { get; set; }
+            public string I { get; set; }
+            public string Id { get; set; }
+            public string Type { get; set; }
+            public string Selected { get; set; }
+            public string[] Colour { get; set; }
+            public string SrcL { get; set; }
+            public string SrcC { get; set; }
+            public string SrcR { get; set; }
+        }
+
+        class RootObject
+        {
+            [JsonProperty("numTabs")]
+            public Results Results { get; set; }
+        }
+
+        class Results
+        {
+            [JsonProperty("items")]
+            public Dictionary<string, Items> JobCodes { get; set; }
+        }
+
     }
 }
