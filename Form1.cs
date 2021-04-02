@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -194,10 +195,10 @@ namespace PoEn
                                 possitionX = priceSubs[priceSubs.Length-3];
 
 
-                                int rowId = dataGridView1.Rows.Add();
+                                int rowId = dgvMain.Rows.Add();
 
                                 // Grab the new row!
-                                DataGridViewRow row = dataGridView1.Rows[rowId];
+                                DataGridViewRow row = dgvMain.Rows[rowId];
 
                                 // Add the data to datagrid
                                 row.Cells["ID"].Value = tradeRequestsCounter.ToString();
@@ -218,49 +219,49 @@ namespace PoEn
                         //incomming messages
                         if ((line.Contains("@From")) && (item.Contains("Incoming Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             inboundMessageCounter++;
                             Application.DoEvents();
                         }
                         //outgoing messages
                         if ((line.Contains("@To")) && (item.Contains("Outgoing Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             outboundMessageCounter++;
                             Application.DoEvents();
                         }
                         //System Info
                         if ((line.Contains("[VULKAN]")) && (item.Contains("Vulkan Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             vulkanCounter++;
                             Application.DoEvents();
                         }
                         //Location and coneciton info
                         if ((line.Contains("[STARTUP]")) && (item.Contains("Startup Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             startupCounter++;
                             Application.DoEvents();
                         }
                         //device info
                         if ((line.Contains("[DEVICE]")) && (item.Contains("Device Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             deviceCounter++;
                             Application.DoEvents();
                         }
                         //location info
                         if ((line.Contains("You have entered")) && (item.Contains("Location Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             locationCounter++;
                             Application.DoEvents();
                         }
                         //conneciton info
                         if ((line.Contains("Connecting to instance")) && (item.Contains("Connection Messages")))
                         {
-                            dataGridView1.Rows.Add(line);
+                            dgvMain.Rows.Add(line);
                             connectionCounter++;
                             Application.DoEvents();
                         }
@@ -280,6 +281,7 @@ namespace PoEn
             //test
             currentTradeRecordsInFile = CountSpecifficBlocks("Trade Requests");
             Console.WriteLine("Current Trade rows in memory: " + currentTradeRecordsInFile.ToString());
+            dgvMain.Sort(dgvMain.Columns[1], ListSortDirection.Descending);
             Application.DoEvents();
         }
 
@@ -333,11 +335,11 @@ namespace PoEn
             {
                 if (e.Value.ToString().Contains("@From"))
                 {
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+                    dgvMain.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
                 }
                 if (e.Value.ToString().Contains("@To"))
                 {
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.DarkGreen;
+                    dgvMain.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.DarkGreen;
                 }
             }
         }
@@ -353,7 +355,7 @@ namespace PoEn
             Console.WriteLine($"Client Changed: {e.FullPath}");
 
             //trigger button1 processing of 1 line while skipping all the others
-            dataGridView1.Rows.Clear();
+            dgvMain.Rows.Clear();
             if (chkIgnoreHistoricalData.Checked == true)
             {
                 ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", true);
@@ -369,14 +371,16 @@ namespace PoEn
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show(CountSpecifficBlocks("Trade Requests").ToString());
+            //MessageBox.Show(CountSpecifficBlocks("Trade Requests").ToString());
+            Stash stash = new Stash();
+            stash.ShowDialog();
         }
         private void btnTest_Click(object sender, EventArgs e)
         {
             //test
             currentTradeRecordsInFile = CountSpecifficBlocks("Trade Requests");
 
-            dataGridView1.Rows.Clear();
+            dgvMain.Rows.Clear();
             if (chkIgnoreHistoricalData.Checked == true)
             {
                 ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", true);
@@ -557,7 +561,38 @@ namespace PoEn
             }
         }
 
-        //do datagrid sortin upon refres
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDoubleBuffered.Checked == true)
+            {
+                SetDoubleBuffer(dgvMain, true);
+            }
+            else
+            {
+                SetDoubleBuffer(dgvMain, false);
+            }
+        }
+
+        static void SetDoubleBuffer(Control ctl, bool DoubleBuffered)
+        {
+            typeof(Control).InvokeMember("DoubleBuffered",
+                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
+                null, ctl, new object[] { DoubleBuffered });
+        }
+
+        private void btnSelectFile_Click(object sender, EventArgs e)
+        {
+            using (System.Windows.Forms.FolderBrowserDialog selectFolderDialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                // Show the FolderBrowserDialog.
+                DialogResult result = selectFolderDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    txtInstallationPath.Text = selectFolderDialog.SelectedPath + @"\";
+                }
+            }
+        }
+
         //show stash location on selected item
     }
 }

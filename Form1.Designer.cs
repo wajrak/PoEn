@@ -32,7 +32,7 @@ namespace PoEn
             this.lblInstallationPath = new System.Windows.Forms.Label();
             this.txtInstallationPath = new System.Windows.Forms.TextBox();
             this.btnTest = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,7 +58,7 @@ namespace PoEn
             this.reportABugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.projectWebsiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnSelectFile = new System.Windows.Forms.Button();
             this.cmbGameMode = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbDisplayLimiter = new System.Windows.Forms.ComboBox();
@@ -73,7 +73,8 @@ namespace PoEn
             this.txtDeviceToken = new System.Windows.Forms.TextBox();
             this.lblLimitDisplay = new System.Windows.Forms.Label();
             this.chkStashLocation = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -108,12 +109,14 @@ namespace PoEn
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // dataGridView1
+            // dgvMain
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvMain.AllowUserToAddRows = false;
+            this.dgvMain.AllowUserToDeleteRows = false;
+            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.Date,
             this.Type,
@@ -123,13 +126,14 @@ namespace PoEn
             this.PossitionLeft,
             this.Currency,
             this.Additional});
-            this.dataGridView1.Location = new System.Drawing.Point(15, 266);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(842, 285);
-            this.dataGridView1.TabIndex = 4;
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            this.dgvMain.Location = new System.Drawing.Point(15, 266);
+            this.dgvMain.Name = "dgvMain";
+            this.dgvMain.RowHeadersWidth = 51;
+            this.dgvMain.RowTemplate.Height = 24;
+            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMain.Size = new System.Drawing.Size(842, 285);
+            this.dgvMain.TabIndex = 4;
+            this.dgvMain.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // ID
             // 
@@ -219,7 +223,8 @@ namespace PoEn
             "Startup Messages",
             "Device Messages",
             "Location Messages",
-            "Connection Messages"});
+            "Connection Messages",
+            "Slain Counter"});
             this.chkOptionsList.Location = new System.Drawing.Point(686, 42);
             this.chkOptionsList.Name = "chkOptionsList";
             this.chkOptionsList.Size = new System.Drawing.Size(171, 174);
@@ -356,14 +361,15 @@ namespace PoEn
             this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
             this.projectWebsiteToolStripMenuItem.Text = "Project Website";
             // 
-            // button4
+            // btnSelectFile
             // 
-            this.button4.Location = new System.Drawing.Point(404, 41);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(73, 23);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Browse";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnSelectFile.Location = new System.Drawing.Point(404, 41);
+            this.btnSelectFile.Name = "btnSelectFile";
+            this.btnSelectFile.Size = new System.Drawing.Size(73, 23);
+            this.btnSelectFile.TabIndex = 13;
+            this.btnSelectFile.Text = "Browse";
+            this.btnSelectFile.UseVisualStyleBackColor = true;
+            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
             // 
             // cmbGameMode
             // 
@@ -518,11 +524,23 @@ namespace PoEn
             this.chkStashLocation.Text = "Show In-Stash location";
             this.chkStashLocation.UseVisualStyleBackColor = true;
             // 
+            // chkDoubleBuffered
+            // 
+            this.chkDoubleBuffered.AutoSize = true;
+            this.chkDoubleBuffered.Location = new System.Drawing.Point(503, 150);
+            this.chkDoubleBuffered.Name = "chkDoubleBuffered";
+            this.chkDoubleBuffered.Size = new System.Drawing.Size(98, 21);
+            this.chkDoubleBuffered.TabIndex = 28;
+            this.chkDoubleBuffered.Text = "checkBox2";
+            this.chkDoubleBuffered.UseVisualStyleBackColor = true;
+            this.chkDoubleBuffered.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 580);
+            this.Controls.Add(this.chkDoubleBuffered);
             this.Controls.Add(this.chkStashLocation);
             this.Controls.Add(this.lblLimitDisplay);
             this.Controls.Add(this.txtDeviceToken);
@@ -537,7 +555,7 @@ namespace PoEn
             this.Controls.Add(this.cmbDisplayLimiter);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbGameMode);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.chkIgnoreHistoricalData);
             this.Controls.Add(this.btnStopThread);
@@ -546,7 +564,7 @@ namespace PoEn
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.chkOptionsList);
             this.Controls.Add(this.btnStartThread);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.txtInstallationPath);
             this.Controls.Add(this.lblInstallationPath);
@@ -556,7 +574,7 @@ namespace PoEn
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Wajrak\'s Path Of Exile Notifications (PoEn)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
@@ -571,7 +589,7 @@ namespace PoEn
         private System.Windows.Forms.Label lblInstallationPath;
         private System.Windows.Forms.TextBox txtInstallationPath;
         private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.Button btnStartThread;
         private System.Windows.Forms.CheckedListBox chkOptionsList;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -585,7 +603,7 @@ namespace PoEn
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportABugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbGameMode;
         private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
@@ -612,6 +630,7 @@ namespace PoEn
         private System.Windows.Forms.Label lblDeviceToken;
         private System.Windows.Forms.Label lblLimitDisplay;
         private System.Windows.Forms.CheckBox chkStashLocation;
+        private System.Windows.Forms.CheckBox chkDoubleBuffered;
     }
 }
 

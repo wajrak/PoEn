@@ -105,5 +105,15 @@ namespace PoEn.Properties {
                 return ResourceManager.GetStream("beep_04", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mok__icon {
+            get {
+                object obj = ResourceManager.GetObject("mok _icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
