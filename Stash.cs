@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -58,8 +60,7 @@ namespace PoEn
 
         private void CreateGrid (DataGridView dgv, bool quad, int xWidth, int yWidth)
         {
-            dgv.Columns.Clear();
-            dgv.Rows.Clear();
+            Headers.Clear();
 
             int xCount;
             int yCount;
@@ -71,8 +72,7 @@ namespace PoEn
             Headers = new DataTable();
             for (int i = 0; i < xCount; i++)
             {
-                Headers.Columns.Add(new DataColumn((i + 1).ToString(), typeof(String)));
-
+                Headers.Columns.Add(new DataColumn((i + 1).ToString(), typeof(DataGridViewImageColumnEx)));
             }
             for (int i = 0; i < xCount; i++)
             {
@@ -80,7 +80,8 @@ namespace PoEn
                 Headers.Rows.Add(dr);
             }
             BindGrid();
-            ResizeGrid(25, 25);
+            if (quad == true) ResizeGrid(25, 25);
+            else ResizeGrid(50, 50);
             //dgv.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -94,7 +95,8 @@ namespace PoEn
         }
         void BindGrid()
         {
-            dgvStash.DataSource = Headers;
+            InputDataDataGridView(Headers, dgvStash);
+            //dgvStash.DataSource = Headers;
             dgvStash.Refresh();
         }
 
@@ -106,6 +108,11 @@ namespace PoEn
         private void button2_Click(object sender, EventArgs e)
         {
             CreateGrid(dgvStash, false, 25, 25);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
         }
 
         //add numbers to row headers
@@ -133,29 +140,288 @@ namespace PoEn
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (WebClient wc = new WebClient())
-            {
-                //var json = wc.DownloadString("http://www.pathofexile.com/api/public-stash-tabs");
-                var json = wc.DownloadString("https://www.pathofexile.com/character-window/get-stash-items?league=Ritual&tabs=1,17&tabIndex=1,17&accountName=wajrak");
-                wc.UseDefaultCredentials = true;
-                RootObject obj = JsonConvert.DeserializeObject<RootObject>(json);
+            PopulateStashList(GetStashJson(1,1));
+        }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            PopulateTabs(GetStashJson(1, 1));
+        }
+
+        //all index pages contain list of all stash tabs.
+        //also had to pass over cookie from browser otherwise reporting error 403, access denied 
+        static string GetStashJson(int _tab, int _index)
+        {
+            string urlTab = @"https://www.pathofexile.com/character-window/get-stash-items?league=Ritual&tabs=";
+            string urlIndex = @"&tabIndex=";
+            string urlAcc = "&accountName=";
+            string accountName = Properties.Settings.Default["AccountName"].ToString();
+            string sSID = Properties.Settings.Default["SSID"].ToString();
+
+            //build uri and cookie - possibly could be extracted from the browser itself to avoid users to copy and paste
+            Uri uri = new Uri(urlTab + _tab + urlIndex + _index + urlAcc + accountName);
+            Cookie cookie = new Cookie("POESESSID", sSID);
+
+            //build request
+            HttpWebRequest request = WebRequest.Create(uri) as HttpWebRequest;
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(uri, cookie);
+
+            string json;
+            using (var sr = new StreamReader(request.GetResponse().GetResponseStream()))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            //Root obj = JsonConvert.DeserializeObject<Root>(json);
+
+            return json;
+        }
+
+        //added populating tabs here at least for now.
+        private void PopulateStashList(string json)
+        {
+            Root obj = JsonConvert.DeserializeObject<Root>(json);
+
+            //populate stash list and also create tabs in tabControl
+            cmbStashList.Items.Clear();
+            foreach (var tab in obj.Tabs)
+            {
+                cmbStashList.Items.Add(tab.N);
+            }
+            foreach (var item in obj.Items)
+            {
+                if (item.Name != String.Empty)
+                {
+                    Console.WriteLine(item.Name);
+                }
+                else
+                {
+                    Console.WriteLine(item.BaseType);
+                }
             }
         }
 
-        public class Items
+        private void PopulateTabs(string json)
         {
-            [JsonProperty("sizeW")]
-            public int SizeW { get; set; }
+            Root obj = JsonConvert.DeserializeObject<Root>(json);
 
-            [JsonProperty("sizeH")]
-            public int SizeH { get; set; }
+            //populate stash list and also create tabs in tabControl
+            tabMain.TabPages.Clear();
+            foreach (var tab in obj.Tabs)
+            {
+                tabMain.TabPages.Add(tab.N);
+            }
+            foreach (var item in obj.Items)
+            {
+                if (item.Name != String.Empty)
+                {
+                    Console.WriteLine(item.Name);
+                }
+                else
+                {
+                    Console.WriteLine(item.BaseType);
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Headers.Clear();
+
+            int xCount;
+            int yCount;
+
+            DataRow dr;
+            Headers = new DataTable();
+            for (int i = 0; i < 26; i++)
+            {
+                Headers.Columns.Add(new DataColumn((i + 1).ToString(), typeof(DataGridViewTextBoxColumnEx)));
+            }
+            for (int i = 0; i < 26; i++)
+            {
+                dr = Headers.NewRow();
+                Headers.Rows.Add(dr);
+            }
+
+            BindGrid();
+            ResizeGrid(25, 25);
+
+            PopulateItemsTab(dgvStash, tpMain, GetStashJson(1, 13));
+        }
+
+        //fills tab with items, needs exalt value converter or separate counter for chaos and exalt 
+        private void PopulateItemsTab(DataGridView dgv, TabPage tp, string json)
+        {
+            Root obj = JsonConvert.DeserializeObject<Root>(json);
+            int itemCounter = 0;
+            int priceCounter = 0;
+            foreach (var tab in obj.Tabs)
+            {
+                if (tab.Selected == true)
+                {
+                    foreach (Item item in obj.Items)
+                    {
+                        Console.WriteLine(item.Name);
+                        itemCounter++;
+                        
+                        string extractedItemPrice = new String(item.Note.Where(Char.IsDigit).ToArray());
+                        priceCounter += Convert.ToInt32(extractedItemPrice);
+
+                        //add item to the grid
+                        //item.W, item.H
+                        //item.X,item.Y
+
+                        var cell = (DataGridViewTextBoxCellEx)dgvStash[item.X, item.Y];
+                        cell.Value = item.Icon;
+                        cell.ColumnSpan = item.H;
+                        cell.RowSpan = item.W;
+                    }
+                }
+            }
+            Console.WriteLine("Total items in this tab: " + itemCounter.ToString());
+            Console.WriteLine("Total value of item in this tab: " + priceCounter.ToString());
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var cell = (DataGridViewTextBoxCellEx)dgvStash[0, 0];
+            cell.ColumnSpan = 3;
+            cell.RowSpan = 2;
+
+            cell = (DataGridViewTextBoxCellEx)dgvStash[4, 4];
+            cell.ColumnSpan = 1;
+            cell.RowSpan = 4;
+        }
+
+        private void InputDataDataGridView(DataTable dt, DataGridView dgv)
+        {
+
+            foreach (DataColumn col in dt.Columns)//create columns in datagridview for each column in datatable
+            {
+                //DataGridViewTextBoxColumnEx c = new DataGridViewTextBoxColumnEx();
+                DataGridViewTextBoxColumnEx c = new DataGridViewTextBoxColumnEx();
+                c.Name = col.ColumnName;
+                dgv.Columns.Add(c);
+            }
+
+            for (int lin = 0; lin < dt.Rows.Count; lin++)//run all the lines in the datatable
+            {
+                DataGridViewRow row = new DataGridViewRow();//create a new row
+                row.CreateCells(dgv);//Clears the existing cells and sets their template according to the supplied
+
+                for (int col = 0; col < dt.Columns.Count; col++)//run all the columns in the datatable
+                {
+                    row.Cells[col].Value = dt.Rows[lin][col].ToString();//add the value in the row
+                }
+                dgv.Rows.Add(row);//add the row in the datagridview
+            }
+        }
+
+        private void cmbStashList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("Selected: " + cmbStashList.Text);
+        }
+
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
+        //defo needs to be moved to a separate file
+        public class Colour
+        {
+            [JsonProperty("r")]
+            public int R { get; set; }
+
+            [JsonProperty("g")]
+            public int G { get; set; }
+
+            [JsonProperty("b")]
+            public int B { get; set; }
+        }
+
+        public class Tab
+        {
+            [JsonProperty("n")]
+            public string N { get; set; }
+
+            [JsonProperty("i")]
+            public int I { get; set; }
+
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("type")]
+            public string Type { get; set; }
+
+            [JsonProperty("selected")]
+            public bool Selected { get; set; }
+
+            [JsonProperty("colour")]
+            public Colour Colour { get; set; }
+
+            [JsonProperty("srcL")]
+            public string SrcL { get; set; }
+
+            [JsonProperty("srcC")]
+            public string SrcC { get; set; }
+
+            [JsonProperty("srcR")]
+            public string SrcR { get; set; }
+        }
+
+        public class Property
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("values")]
+            public List<List<object>> Values { get; set; }
+
+            [JsonProperty("displayMode")]
+            public int DisplayMode { get; set; }
+
+            [JsonProperty("type")]
+            public int Type { get; set; }
+        }
+
+        public class Requirement
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("values")]
+            public List<List<object>> Values { get; set; }
+
+            [JsonProperty("displayMode")]
+            public int DisplayMode { get; set; }
+        }
+
+        public class Socket
+        {
+            [JsonProperty("group")]
+            public int Group { get; set; }
+
+            [JsonProperty("attr")]
+            public string Attr { get; set; }
+
+            [JsonProperty("sColour")]
+            public string SColour { get; set; }
+        }
+
+        public class Item
+        {
+            [JsonProperty("verified")]
+            public bool Verified { get; set; }
+
+            [JsonProperty("w")]
+            public int W { get; set; }
+
+            [JsonProperty("h")]
+            public int H { get; set; }
 
             [JsonProperty("icon")]
             public string Icon { get; set; }
 
             [JsonProperty("league")]
-            public string league { get; set; }
+            public string League { get; set; }
 
             [JsonProperty("id")]
             public string Id { get; set; }
@@ -170,57 +436,110 @@ namespace PoEn
             public string BaseType { get; set; }
 
             [JsonProperty("identified")]
-            public string Identified { get; set; }
+            public bool Identified { get; set; }
 
             [JsonProperty("itemLevel")]
             public int ItemLevel { get; set; }
 
+            [JsonProperty("ilvl")]
+            public int Ilvl { get; set; }
+
+            [JsonProperty("note")]
+            public string Note { get; set; }
+
             [JsonProperty("properties")]
-            public string[] Properties { get; set; }
+            public List<Property> Properties { get; set; }
 
             [JsonProperty("explicitMods")]
-            public string[] ExplicitMods { get; set; }
+            public List<string> ExplicitMods { get; set; }
 
             [JsonProperty("descrText")]
-            public int DescrText { get; set; }
+            public string DescrText { get; set; }
 
             [JsonProperty("frameType")]
-            public int FrameType{ get; set; }
+            public int FrameType { get; set; }
 
             [JsonProperty("x")]
-            public int x { get; set; }
+            public int X { get; set; }
 
             [JsonProperty("y")]
-            public int y { get; set; }
+            public int Y { get; set; }
 
             [JsonProperty("inventoryId")]
             public string InventoryId { get; set; }
 
-        }
-        public class Tabs
-        {
-            public string N { get; set; }
-            public string I { get; set; }
-            public string Id { get; set; }
-            public string Type { get; set; }
-            public string Selected { get; set; }
-            public string[] Colour { get; set; }
-            public string SrcL { get; set; }
-            public string SrcC { get; set; }
-            public string SrcR { get; set; }
+            [JsonProperty("requirements")]
+            public List<Requirement> Requirements { get; set; }
+
+            [JsonProperty("implicitMods")]
+            public List<string> ImplicitMods { get; set; }
+
+            [JsonProperty("flavourText")]
+            public List<string> FlavourText { get; set; }
+
+            [JsonProperty("sockets")]
+            public List<Socket> Sockets { get; set; }
+
+            [JsonProperty("socketedItems")]
+            public List<object> SocketedItems { get; set; }
+
+            [JsonProperty("utilityMods")]
+            public List<string> UtilityMods { get; set; }
+
+            [JsonProperty("craftedMods")]
+            public List<string> CraftedMods { get; set; }
+
+            [JsonProperty("enchantMods")]
+            public List<string> EnchantMods { get; set; }
         }
 
-        class RootObject
+        public class Root
         {
             [JsonProperty("numTabs")]
-            public Results Results { get; set; }
-        }
+            public int NumTabs { get; set; }
 
-        class Results
-        {
+            [JsonProperty("tabs")]
+            public List<Tab> Tabs { get; set; }
+
             [JsonProperty("items")]
-            public Dictionary<string, Items> JobCodes { get; set; }
+            public List<Item> Items { get; set; }
         }
 
+        //download image - needs cache as for now it downloads image very time 
+        private static Image StreamImage(string url)
+        {
+            WebClient wc = new WebClient();
+            byte[] bytes = wc.DownloadData(url);
+            MemoryStream ms = new MemoryStream(bytes);
+            System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+            return img;
+        }
+
+        private void RenderImages(DataGridView dgv)
+        {
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                DataGridViewImageCellEx cell = row.Cells[0] as DataGridViewImageCellEx;
+
+                cell.Value = (System.Drawing.Image)Properties.Resources.mok__icon;
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            RenderImages(dgvStash);
+        }
+
+        private void dgvStash_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+
+            foreach (DataGridViewRow row in dgvStash.Rows)
+            {
+                if ((!row.IsNewRow) && (row.Cells[0].Value != "") && (row.Cells[0].Value != null))
+                    row.Cells[0].Value = StreamImage(row.Cells[0].Value.ToString());
+                else
+                    row.Cells[0].Value = null;
+            }
+        }
     }
 }

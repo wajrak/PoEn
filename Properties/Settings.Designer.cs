@@ -46,5 +46,29 @@ namespace PoEn.Properties {
                 this["DeviceToken"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AccountName {
+            get {
+                return ((string)(this["AccountName"]));
+            }
+            set {
+                this["AccountName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SSID {
+            get {
+                return ((string)(this["SSID"]));
+            }
+            set {
+                this["SSID"] = value;
+            }
+        }
     }
 }

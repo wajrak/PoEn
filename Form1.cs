@@ -535,6 +535,8 @@ namespace PoEn
         {
             Properties.Settings.Default["ClientsPath"] = txtInstallationPath.Text;
             Properties.Settings.Default["DeviceToken"] = txtDeviceToken.Text;
+            Properties.Settings.Default["AccountName"] = txtAccountName.Text;
+            Properties.Settings.Default["SSID"] = txtSSID.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -542,6 +544,8 @@ namespace PoEn
         {
             txtInstallationPath.Text = Properties.Settings.Default["ClientsPath"].ToString();
             txtDeviceToken.Text = Properties.Settings.Default["DeviceToken"].ToString();
+            txtAccountName.Text = Properties.Settings.Default["AccountName"].ToString();
+            txtSSID.Text = Properties.Settings.Default["SSID"].ToString();
         }
 
         //draw a grid to show estimated item location
