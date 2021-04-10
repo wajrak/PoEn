@@ -153,3 +153,4 @@ C:\Users\wajra\Source\Repos\PoEn\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.exe.config
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.csproj.CopyComplete
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.Stash.resources
+C:\Users\wajra\Source\Repos\PoEn\bin\Debug\credentials.json

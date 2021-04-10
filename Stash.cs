@@ -207,7 +207,7 @@ namespace PoEn
             Root obj = JsonConvert.DeserializeObject<Root>(json);
 
             //populate stash list and also create tabs in tabControl
-            tabMain.TabPages.Clear();
+            //tabMain.TabPages.Clear();
             foreach (var tab in obj.Tabs)
             {
                 tabMain.TabPages.Add(tab.N);
@@ -519,8 +519,9 @@ namespace PoEn
         {
             foreach (DataGridViewRow row in dgv.Rows)
             {
-                DataGridViewImageCellEx cell = row.Cells[0] as DataGridViewImageCellEx;
+                DataGridViewImageCellEx cell =  row.Cells[0] as DataGridViewImageCellEx;
 
+                if (cell.Value != null)
                 cell.Value = (System.Drawing.Image)Properties.Resources.mok__icon;
             }
         }

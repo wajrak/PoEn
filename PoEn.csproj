@@ -142,6 +142,9 @@
     <EmbeddedResource Include="Stash.resx">
       <DependentUpon>Stash.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="key.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

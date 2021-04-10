@@ -13,21 +13,25 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using PoEn.Properties;
+using Message = FirebaseAdmin.Messaging.Message;
 
 namespace PoEn
 {
     public partial class Form1 : Form
     {
         string appPath = Application.StartupPath;
-        //public var watch = new FileSystemWatcher(txtInstallationPath.Text);
         const string logFile = "\\log.txt";
         const string clientFile = "logs\\Client.txt";
         bool ThreadActive = false;
         int currentTradeRecordsInFile = 0;
         string deviceToken = String.Empty;
+
 
         public Form1()
         {
@@ -36,6 +40,11 @@ namespace PoEn
             LoadSettings();
             chkDoubleBuffered.Checked = true;
             this.Icon = Resources.AppIcon;
+
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(Application.StartupPath + @"\credentials.json"),
+            });
         }
 
         private string CheckRegistryKey()
@@ -438,59 +447,44 @@ namespace PoEn
         private void button3_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(CountSpecifficBlocks("Trade Requests").ToString());
-            Console.WriteLine(SendNotificationFromFirebaseCloud(DateTime.Now,"action","header","item","price","posY","posX"));
+            SendToTokenAsync(txtDeviceToken.Text, "action1", "stash1", "item1", DateTime.Now, 10, 31, 12);
         }
 
-        public class Message
+        public class MessageData
         {
             public DateTime Timestamp { get; set; }
             public string Action { get; set; }
-            public string Header { get; set; }
+            public string Stash { get; set; }
             public string Item { get; set; }
             public string Price { get; set; }
             public string PosY { get; set; }
             public string PosX { get; set; }
         }
 
-        //needs to be changed to a speciffic target
-        public static String SendNotificationFromFirebaseCloud(DateTime timestamp, string action, string header, string item, string price, string posY, string posX)
+        internal static async Task SendToTokenAsync(string registrationToken, string action, string stash, string item, DateTime datetime, int price, int posX, int posY)
         {
-
-            var result = "-1";
-            var webAddr = "https://fcm.googleapis.com/fcm/send";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=AAAAYpNOLUM:APA91bE73CrV_tc2siR867_-I4teXGLsD0tv9pZAx1SCjbILTRd_UKiBSauvCLoeDitIXWVQQXXp69MWaJR2iZPVzFVrMe9BBvG3B-RB8qjNmMaDTRzezNctn_5lfd-chmaeM0UgN2oR");
-            httpWebRequest.Method = "POST";
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            var message = new Message()
             {
-                Message msg = new Message();
-                msg.Timestamp = timestamp;
-                msg.Action = action;
-                msg.Header = header;
-                msg.Item = item;
-                msg.Price = price;
-                msg.PosY = posY;
-                msg.PosX = posX;
-
-                string output = @"{""to"": ""/topics/PoE"", ""data"": " + Environment.NewLine;
-                output += JsonConvert.SerializeObject(msg);
-                output += @", " + Environment.NewLine + @"""notification"": {""title"": ""PoEn Message"", ""body"": ""This is Notification"", ""sound"":""default""}}";
-
-                Console.WriteLine(output);
-                Console.WriteLine(" ============");
-
-                streamWriter.Write(output);
-                Console.WriteLine(output);
-                streamWriter.Flush();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                result = streamReader.ReadToEnd();
-            }
-            return result;
+                Data = new Dictionary<string, string>()
+                {
+                    { "Action", action },
+                    { "Stash", stash },
+                    { "Item", item },
+                    { "Timestamp", datetime.ToString() },
+                    { "Price", price.ToString() },
+                    { "PosX", posX.ToString() },
+                    { "PosY", posY.ToString() },
+                },
+                Notification = new Notification()
+                {
+                    Title = "PoEn Notification",
+                    Body = "New trade request",
+                },
+                Token = registrationToken,
+            };
+            string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            // Response is a message ID string.
+            Console.WriteLine("Successfully sent message: " + response);
         }
 
         //TOPMST window for debuging while in the game
@@ -546,6 +540,8 @@ namespace PoEn
             txtDeviceToken.Text = Properties.Settings.Default["DeviceToken"].ToString();
             txtAccountName.Text = Properties.Settings.Default["AccountName"].ToString();
             txtSSID.Text = Properties.Settings.Default["SSID"].ToString();
+
+            deviceToken = Properties.Settings.Default["DeviceToken"].ToString();
         }
 
         //draw a grid to show estimated item location
