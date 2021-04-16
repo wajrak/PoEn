@@ -204,6 +204,9 @@ namespace PoEn
                                 possitionY = priceSubs[priceSubs.Length-1];
                                 possitionX = priceSubs[priceSubs.Length-3];
 
+                                int posX = Convert.ToInt32(possitionX.Replace(",", ""));
+                                int posY = Convert.ToInt32(possitionY.Replace(")", ""));
+
 
                                 int rowId = dgvMain.Rows.Add();
 
@@ -217,10 +220,20 @@ namespace PoEn
                                 row.Cells["Item"].Value = itemR;
                                 row.Cells["Price"].Value = price;
                                 row.Cells["Currency"].Value = currency;
-                                row.Cells["PossitionTop"].Value = possitionY.Replace(")","");
-                                row.Cells["PossitionLeft"].Value = possitionX.Replace(",","");
+                                row.Cells["PossitionTop"].Value = posY.ToString();
+                                row.Cells["PossitionLeft"].Value = posX.ToString();
 
                                 Console.WriteLine("Subs count: " + subs.Length.ToString());
+
+                                //send fb msg
+                                if (currentTradeRecordsInFile < newAmountofBlock)
+                                {
+                                    //PlaySound();
+
+                                    //sending out fb msg, fix date parsing issue 
+                                    SendToTokenAsync(txtDeviceToken.Text, "Trade request", @"N\A", itemR, DateTime.Now, Convert.ToInt32(price), posX, posY);
+                                }
+                                Application.DoEvents();
                             }
                             tradeRequestsCounter++;
                             //Console.WriteLine(tradeRequestsCounter.ToString());
