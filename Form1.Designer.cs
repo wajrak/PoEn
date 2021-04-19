@@ -78,6 +78,7 @@ namespace PoEn
             this.txtAccountName = new System.Windows.Forms.TextBox();
             this.txtSSID = new System.Windows.Forms.TextBox();
             this.lblSSID = new System.Windows.Forms.Label();
+            this.chkPlaySound = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -317,7 +318,7 @@ namespace PoEn
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(869, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(869, 28);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -326,7 +327,7 @@ namespace PoEn
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysOnTopToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // alwaysOnTopToolStripMenuItem
@@ -344,7 +345,7 @@ namespace PoEn
             this.aboutToolStripMenuItem1,
             this.projectWebsiteToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // reportABugToolStripMenuItem
@@ -574,11 +575,25 @@ namespace PoEn
             this.lblSSID.TabIndex = 31;
             this.lblSSID.Text = "SSID:";
             // 
+            // chkPlaySound
+            // 
+            this.chkPlaySound.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkPlaySound.AutoSize = true;
+            this.chkPlaySound.Checked = true;
+            this.chkPlaySound.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPlaySound.Location = new System.Drawing.Point(503, 177);
+            this.chkPlaySound.Name = "chkPlaySound";
+            this.chkPlaySound.Size = new System.Drawing.Size(102, 21);
+            this.chkPlaySound.TabIndex = 33;
+            this.chkPlaySound.Text = "Play Sound";
+            this.chkPlaySound.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 610);
+            this.Controls.Add(this.chkPlaySound);
             this.Controls.Add(this.txtSSID);
             this.Controls.Add(this.lblSSID);
             this.Controls.Add(this.txtAccountName);
@@ -678,6 +693,7 @@ namespace PoEn
         private System.Windows.Forms.Label lblAccountName;
         private System.Windows.Forms.TextBox txtSSID;
         private System.Windows.Forms.Label lblSSID;
+        private System.Windows.Forms.CheckBox chkPlaySound;
     }
 }
 

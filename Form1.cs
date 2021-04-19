@@ -125,7 +125,7 @@ namespace PoEn
             if (skipLines == true)
             {
                 //linesToSkip = CountLinesReader(txtInstallationPath.Text + "\\logs\\Client.txt");
-                linesToSkip = CountSpecifficBlocks("Trade Requests")-5; //offseting to display only 5 items
+                linesToSkip = CountSpecifficBlocks("Trade Requests")-6; //offseting to display only 5 items
                 Console.WriteLine("Lines to skip: " + (linesToSkip).ToString() + " of total " + linesToSkip.ToString()); //displaying just one recent line for threading
             }
             else
@@ -151,6 +151,7 @@ namespace PoEn
             {
                 PlaySound();
             }
+            int tradeLoopCounter = 0;
             Application.DoEvents();
 
             //Loop through all checked items on the list and populate data grid
@@ -226,13 +227,26 @@ namespace PoEn
                                 Console.WriteLine("Subs count: " + subs.Length.ToString());
 
                                 //send fb msg
-                                if (currentTradeRecordsInFile < newAmountofBlock)
+                                Application.DoEvents();
+
+                                //this needs to be linked to something other than hardset integer...right now amount of displayed rows is 6 so 6 is there for a reason as we're recounting actions not actual records being processed
+                                if (tradeLoopCounter == 4)
                                 {
-                                    //PlaySound();
+                                    if (chkPlaySound.Checked == true)
+                                    {
+                                        PlaySound();
+                                    }
 
                                     //sending out fb msg, fix date parsing issue 
                                     SendToTokenAsync(txtDeviceToken.Text, "Trade request", @"N\A", itemR, DateTime.Now, Convert.ToInt32(price), posX, posY);
+
+                                    //copy item name to the clipboard
+                                    Clipboard.SetText(itemR);
+
                                 }
+
+                                Console.WriteLine("Processing " + tradeLoopCounter.ToString() + "trade request");
+                                tradeLoopCounter++;
                                 Application.DoEvents();
                             }
                             tradeRequestsCounter++;
