@@ -271,6 +271,7 @@ namespace PoEn
             this.button1.TabIndex = 8;
             this.button1.Text = "Test";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // btnStopThread
@@ -308,6 +309,7 @@ namespace PoEn
             this.button3.TabIndex = 11;
             this.button3.Text = "Test2";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // menuStrip1
@@ -318,7 +320,7 @@ namespace PoEn
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(869, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(869, 30);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -327,7 +329,7 @@ namespace PoEn
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysOnTopToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 26);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // alwaysOnTopToolStripMenuItem
@@ -345,7 +347,7 @@ namespace PoEn
             this.aboutToolStripMenuItem1,
             this.projectWebsiteToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // reportABugToolStripMenuItem
@@ -381,12 +383,12 @@ namespace PoEn
             this.cmbGameMode.FormattingEnabled = true;
             this.cmbGameMode.Items.AddRange(new object[] {
             "Ritual",
-            "Standard"});
+            "Ultimatum"});
             this.cmbGameMode.Location = new System.Drawing.Point(130, 168);
             this.cmbGameMode.Name = "cmbGameMode";
             this.cmbGameMode.Size = new System.Drawing.Size(121, 24);
             this.cmbGameMode.TabIndex = 14;
-            this.cmbGameMode.Text = "Ritual";
+            this.cmbGameMode.Text = "Ultimatum";
             // 
             // label1
             // 
