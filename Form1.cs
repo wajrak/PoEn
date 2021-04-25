@@ -238,7 +238,7 @@ namespace PoEn
                                     }
 
                                     //sending out fb msg, fix date parsing issue 
-                                    SendToTokenAsync(txtDeviceToken.Text, "Trade request", @"N\A", itemR, DateTime.Now, Convert.ToInt32(price), posX, posY);
+                                    SendToTokenAsync(txtDeviceToken.Text, "Trade request", @"N\A", itemR, Convert.ToInt32(price), DateTime.Now, currency, posX, posY);
 
                                     //copy item name to the clipboard
                                     Clipboard.SetText(itemR);
@@ -474,7 +474,7 @@ namespace PoEn
         private void button3_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(CountSpecifficBlocks("Trade Requests").ToString());
-            SendToTokenAsync(txtDeviceToken.Text, "action1", "stash1", "item1", DateTime.Now, 10, 31, 12);
+            //SendToTokenAsync(txtDeviceToken.Text, "action1", "stash1", "item1", "currency", DateTime.Now, 10, 31, 12);
         }
 
         public class MessageData
@@ -488,7 +488,7 @@ namespace PoEn
             public string PosX { get; set; }
         }
 
-        internal static async Task SendToTokenAsync(string registrationToken, string action, string stash, string item, DateTime datetime, int price, int posX, int posY)
+        internal static async Task SendToTokenAsync(string registrationToken, string action, string stash, string item, int price, DateTime datetime, string currency, int posX, int posY)
         {
             var message = new Message()
             {
@@ -505,7 +505,7 @@ namespace PoEn
                 Notification = new Notification()
                 {
                     Title = "PoEn Notification",
-                    Body = "New trade request",
+                    Body = "New trade request for item: " + item + ", price: " + price,
                 },
                 Token = registrationToken,
             };
@@ -619,6 +619,21 @@ namespace PoEn
                     txtInstallationPath.Text = selectFolderDialog.SelectedPath + @"\";
                 }
             }
+        }
+
+        private void projectWebsiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/users/wajrak/projects/1");
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.patreon.com/wajbox");
+        }
+
+        private void reportABugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/wajrak/PoEn/issues");
         }
 
         //show stash location on selected item

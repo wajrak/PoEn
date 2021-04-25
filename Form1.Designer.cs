@@ -320,7 +320,7 @@ namespace PoEn
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(869, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(869, 28);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -329,7 +329,7 @@ namespace PoEn
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysOnTopToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 26);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // alwaysOnTopToolStripMenuItem
@@ -347,26 +347,29 @@ namespace PoEn
             this.aboutToolStripMenuItem1,
             this.projectWebsiteToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // reportABugToolStripMenuItem
             // 
             this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
-            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
+            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.reportABugToolStripMenuItem.Text = "Report bug";
+            this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(195, 26);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem1.Text = "Donate";
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // projectWebsiteToolStripMenuItem
             // 
             this.projectWebsiteToolStripMenuItem.Name = "projectWebsiteToolStripMenuItem";
-            this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
+            this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.projectWebsiteToolStripMenuItem.Text = "Project Website";
+            this.projectWebsiteToolStripMenuItem.Click += new System.EventHandler(this.projectWebsiteToolStripMenuItem_Click);
             // 
             // btnSelectFile
             // 
