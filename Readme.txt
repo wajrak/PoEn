@@ -5,7 +5,7 @@
 3.	For the first use you want to send out TOKEN from you DEVICE to the PC. Because the token is long as hell, so I’ve added option to share it via email or whatever means you’ve got installed on your device. When you get the TOKEN to the PC PoEn app, paste it into Device Token text box. Keep in mind I had no time to do babysitting code so you need to make sure, ONLY thing you’re pasting is the TOKEN, no white characters or any other characters to be fair. 
 4.	Hit start button on the PC PoEn app.
 5.	Minimise your phone app, again same reason no time so I have only coded handler for messages received in the background. If you’re looking at the mobile apps interface – you WILL NOT, receive any messages. 
-6.	That’s it. You should be receiving messages whenever there is a trade request coming your way, containing brief info about the item and its price. 
+6.	That’s it. You should be receiving messages whenever there is a trade request coming your way, containing brief info about the item and its price. Also name of the item will be copied to the clipboard so you only have to go to your stash, select tab and hit ctrl+v
 
 Disclaimer: 
 
@@ -17,4 +17,4 @@ This was only tested on handful of emulated android devices and one real handset
 
 
 Project website:
-https://github.com/orgs/Wajbox/dashboard
+https://github.com/users/wajrak/projects/1
