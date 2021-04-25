@@ -9,8 +9,7 @@ C:\Users\wajra\Source\Repos\wajrak\PoEn\bin\Debug\PoEn.exe.config
 C:\Users\wajra\Source\Repos\wajrak\PoEn\bin\Debug\PoEn.exe
 C:\Users\wajra\Source\Repos\wajrak\PoEn\bin\Debug\PoEn.pdb
 C:\Users\wajra\Source\Repos\PoEn\bin\Debug\key.json
-C:\Users\wajra\Source\Repos\PoEn\bin\Debug\credentials_sample.json
-C:\Users\wajra\Source\Repos\PoEn\bin\Debug\credentials.json
+C:\Users\wajra\Source\Repos\PoEn\bin\Debug\Data.json
 C:\Users\wajra\Source\Repos\PoEn\bin\Debug\PoEn.exe.config
 C:\Users\wajra\Source\Repos\PoEn\bin\Debug\PoEn.exe
 C:\Users\wajra\Source\Repos\PoEn\bin\Debug\PoEn.pdb

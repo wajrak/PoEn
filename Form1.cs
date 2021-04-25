@@ -43,7 +43,7 @@ namespace PoEn
 
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile(Application.StartupPath + @"\credentials.json"),
+                Credential = GoogleCredential.FromFile(Application.StartupPath + @"\Data.json"),
             });
         }
 
