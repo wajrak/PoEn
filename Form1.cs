@@ -40,11 +40,22 @@ namespace PoEn
             LoadSettings();
             chkDoubleBuffered.Checked = true;
             this.Icon = Resources.AppIcon;
-
+            ;
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile(Application.StartupPath + @"\Data.json"),
+                Credential = GoogleCredential.FromJson(GetEmbeddedResourceContent("PoEn.Data.json")),
             });
+        }
+
+        public static string GetEmbeddedResourceContent(string resourceName)
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            Stream stream = asm.GetManifestResourceStream(resourceName);
+            StreamReader source = new StreamReader(stream);
+            string fileContent = source.ReadToEnd();
+            source.Dispose();
+            stream.Dispose();
+            return fileContent;
         }
 
         private string CheckRegistryKey()
@@ -474,7 +485,7 @@ namespace PoEn
         private void button3_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(CountSpecifficBlocks("Trade Requests").ToString());
-            //SendToTokenAsync(txtDeviceToken.Text, "action1", "stash1", "item1", "currency", DateTime.Now, 10, 31, 12);
+            SendToTokenAsync(txtDeviceToken.Text, "action1", "stash1", "item1", 4, DateTime.Now, "currency", 31, 12);
         }
 
         public class MessageData

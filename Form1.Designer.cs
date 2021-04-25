@@ -353,21 +353,21 @@ namespace PoEn
             // reportABugToolStripMenuItem
             // 
             this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
-            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
             this.reportABugToolStripMenuItem.Text = "Report bug";
             this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(195, 26);
             this.aboutToolStripMenuItem1.Text = "Donate";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // projectWebsiteToolStripMenuItem
             // 
             this.projectWebsiteToolStripMenuItem.Name = "projectWebsiteToolStripMenuItem";
-            this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.projectWebsiteToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
             this.projectWebsiteToolStripMenuItem.Text = "Project Website";
             this.projectWebsiteToolStripMenuItem.Click += new System.EventHandler(this.projectWebsiteToolStripMenuItem_Click);
             // 
