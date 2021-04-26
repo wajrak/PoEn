@@ -97,9 +97,6 @@ namespace PoEn
                 txtInstallationPath.Text = CheckRegistryKey();
             }
 
-            //Set-up client watcher
-            fileSystemWatcher1.Path = txtInstallationPath.Text + "logs";
-
             //check default option on the checkbox list
             int index = chkOptionsList.Items.IndexOf("Trade Requests");
             chkOptionsList.SetItemChecked(index, true);
@@ -124,7 +121,7 @@ namespace PoEn
             Console.WriteLine("Logged an error - " + errorMsg);
         }
 
-        private void ReadFile(string pathToFile, bool skipLines)
+        private async Task ReadFileAsync(string pathToFile, bool skipLines)
         {
             Console.WriteLine("Preparing to read file: " + pathToFile + " SkipLines: " + skipLines);
             //disable triggering button to avoid weird stuff
@@ -158,10 +155,7 @@ namespace PoEn
 
             //beep!
             int newAmountofBlock = CountSpecifficBlocks("Trade Requests");
-            if (currentTradeRecordsInFile < newAmountofBlock)
-            {
-                PlaySound();
-            }
+
             int tradeLoopCounter = 0;
             Application.DoEvents();
 
@@ -191,6 +185,8 @@ namespace PoEn
                                 string leagueType = String.Empty;
                                 string possitionY = String.Empty;
                                 string possitionX = String.Empty;
+                                string stash = String.Empty;
+                                string buyer = String.Empty;
 
                                 //do some processing and split string into subs
                                 Console.WriteLine($"Processing Sub");
@@ -203,6 +199,13 @@ namespace PoEn
                                 string[] secondSubsTypeSplit = secondSubs[1].Split(' ');
                                 string[] secondSubsItemSplit = secondSubs[1].Split(new string[] { "your" }, StringSplitOptions.None); //possible to extract nick and clan name
                                 string[] priceSubs = firstSubs[1].Split(' ');
+                                string[] stashSplit;
+
+                                //getting stash with regexps from ()
+                                System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("\"(.*?)\"");
+
+                                var stashMatch = regex.Matches(firstSubs[1]);
+                                stash = stashMatch[0].Groups[0].ToString().Replace("\"", "");
 
                                 //FIRST part of breakdown:
                                 date = secondSubsDateSplit[0] + " " + secondSubsDateSplit[1];
@@ -211,6 +214,7 @@ namespace PoEn
                                 itemR = secondSubsItemSplit[1].Replace("listed", "");
                                 price = priceSubs[1];
                                 currency = priceSubs[2];
+                                buyer = secondSubsTypeSplit[1];
 
                                 //getting last 4 records of priceSubs to get item possition
                                 possitionY = priceSubs[priceSubs.Length-1];
@@ -249,7 +253,7 @@ namespace PoEn
                                     }
 
                                     //sending out fb msg, fix date parsing issue 
-                                    SendToTokenAsync(txtDeviceToken.Text, "Trade request", @"N\A", itemR, Convert.ToInt32(price), DateTime.Now, currency, posX, posY);
+                                    await SendToTokenAsync(txtDeviceToken.Text, "Trade request", stash, itemR, Convert.ToInt32(price), DateTime.Now, currency, posX, posY);
 
                                     //copy item name to the clipboard
                                     Clipboard.SetText(itemR);
@@ -335,6 +339,9 @@ namespace PoEn
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Set-up client watcher
+            fileSystemWatcher1.Path = txtInstallationPath.Text + "logs";
+
             Thread newThread = new Thread(this.SingleByteReadThread);
             ThreadActive = true;
             newThread.Start();
@@ -394,7 +401,7 @@ namespace PoEn
 
 
         //triggering actions when changes in client file are detected.
-        private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+        private async void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
             {
@@ -406,11 +413,11 @@ namespace PoEn
             dgvMain.Rows.Clear();
             if (chkIgnoreHistoricalData.Checked == true)
             {
-                ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", true);
+                await ReadFileAsync(txtInstallationPath.Text + "\\logs\\Client.txt", true);
             }
             else
             {
-                ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", false);
+                await ReadFileAsync(txtInstallationPath.Text + "\\logs\\Client.txt", false);
             }
 
             //flash window to get attention, this needs to be triggered differently in the future, possibly after adding new row to the data grid so maybe an aciton there
@@ -431,11 +438,11 @@ namespace PoEn
             dgvMain.Rows.Clear();
             if (chkIgnoreHistoricalData.Checked == true)
             {
-                ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", true);
+                ReadFileAsync(txtInstallationPath.Text + "\\logs\\Client.txt", true);
             }
             else
             {
-                ReadFile(txtInstallationPath.Text + "\\logs\\Client.txt", false);
+                ReadFileAsync(txtInstallationPath.Text + "\\logs\\Client.txt", false);
             }
         }
 
@@ -516,7 +523,7 @@ namespace PoEn
                 Notification = new Notification()
                 {
                     Title = "PoEn Notification",
-                    Body = "New trade request for item: " + item + ", price: " + price,
+                    Body = "New trade request for item: " + item.Trim() + ", price: " + price + " " + currency,
                 },
                 Token = registrationToken,
             };

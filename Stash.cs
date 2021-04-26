@@ -152,7 +152,7 @@ namespace PoEn
         //also had to pass over cookie from browser otherwise reporting error 403, access denied 
         static string GetStashJson(int _tab, int _index)
         {
-            string urlTab = @"https://www.pathofexile.com/character-window/get-stash-items?league=Ritual&tabs=";
+            string urlTab = @"https://www.pathofexile.com/character-window/get-stash-items?league=Ultimatum&tabs=";
             string urlIndex = @"&tabIndex=";
             string urlAcc = "&accountName=";
             string accountName = Properties.Settings.Default["AccountName"].ToString();
@@ -264,9 +264,12 @@ namespace PoEn
                     {
                         Console.WriteLine(item.Name);
                         itemCounter++;
-                        
-                        string extractedItemPrice = new String(item.Note.Where(Char.IsDigit).ToArray());
-                        priceCounter += Convert.ToInt32(extractedItemPrice);
+
+                        if (item.Note != null)
+                        {
+                            string extractedItemPrice = new String(item.Note.Where(Char.IsDigit).ToArray());
+                            priceCounter += Convert.ToInt32(extractedItemPrice);
+                        }
 
                         //add item to the grid
                         //item.W, item.H

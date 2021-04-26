@@ -173,3 +173,4 @@ C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.application
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.csproj.CopyComplete
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.exe
 C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.pdb
+C:\Users\wajra\Source\Repos\PoEn\obj\Debug\PoEn.csprojAssemblyReference.cache
