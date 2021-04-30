@@ -253,6 +253,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="credentials_sample.json" />
     <EmbeddedResource Include="Data.json" />
+    <EmbeddedResource Include="Data_sample.json" />
     <None Include="key.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
